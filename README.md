@@ -13,7 +13,8 @@ It uses following components:
 
 Unicity is achieved by combining prefixes-suffixes to generate one wave/chord.
 For the graphical part, we use a combination of (subject to change)
-- Color, 2 sources of Light, Rotation.
+- Color, rotational speed, rotational angle, lightning angle.
+For the sound, we use a use a chord in C Major scale
 
 To do list / Next Steps :
 - Attach Urbit documents and sigils doc
