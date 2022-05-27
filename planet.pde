@@ -1,4 +1,12 @@
 import java.util.*;
+import processing.sound.*;
+
+SinOsc sine;
+SinOsc sine2;
+
+String text1 = "";
+int FREQ = 300;
+boolean play = false;
 
 String sigils[] = new String[4];
 Integer sigilsInteger[] = new Integer[4];
@@ -11,48 +19,90 @@ int height = 512;
 int color1;
 
 void setup() {
-  size(512, 512, P3D);
-  loadSillable();
-  colorMode(HSB, 360, 1, 1);
+    size(800, 600, P3D);
+    background(0);
+    loadSillable();
+    colorMode(HSB, 360, 1, 1);
+    
+    //Create the sine oscillator.
+    sine = new SinOsc(this);
+    sine2 = new SinOsc(this);
+    
+    sine.freq(FREQ);
+    sine2.freq(FREQ * 2);
 }
 
 void loadSillable() {
-  /*
-  sigils[0] = "div";
-  sigils[1] = "ter";
-  sigils[2] = "mas";
-  sigils[3] = "ter";
-  */
-  Random rand = new Random();
-  sigils[0] = prefixes.get(rand.nextInt(prefixes.size()));
-  sigils[1] = suffixes.get(rand.nextInt(suffixes.size()));
-  sigils[2] = prefixes.get(rand.nextInt(prefixes.size()));
-  sigils[3] = suffixes.get(rand.nextInt(suffixes.size()));
-  println("Planet: ~" + sigils[0] + sigils[1] + "-" + sigils[2] + sigils[3]);
-  sigilsInteger[0] = prefixes.indexOf(sigils[0]);
-  sigilsInteger[1] = suffixes.indexOf(sigils[1]);
-  sigilsInteger[2] = prefixes.indexOf(sigils[2]);
-  sigilsInteger[3] = suffixes.indexOf(sigils[3]);
-  println("Planet: " + sigilsInteger[0] + "-" + sigilsInteger[1] + "-" + sigilsInteger[2] + "-" + sigilsInteger[3]);
-  
-  loadProps();
+    /*
+    sigils[0] = "div";
+    sigils[1] = "ter";
+    sigils[2] = "mas";
+    sigils[3] = "ter";
+    */
+    Random rand = new Random();
+    sigils[0] = prefixes.get(rand.nextInt(prefixes.size()));
+    sigils[1] = suffixes.get(rand.nextInt(suffixes.size()));
+    sigils[2] = prefixes.get(rand.nextInt(prefixes.size()));
+    sigils[3] = suffixes.get(rand.nextInt(suffixes.size()));
+    println("Planet: ~" + sigils[0] + sigils[1] + "-" + sigils[2] + sigils[3]);
+    sigilsInteger[0] = prefixes.indexOf(sigils[0]);
+    sigilsInteger[1] = suffixes.indexOf(sigils[1]);
+    sigilsInteger[2] = prefixes.indexOf(sigils[2]);
+    sigilsInteger[3] = suffixes.indexOf(sigils[3]);
+    println("Planet: " + sigilsInteger[0] + "-" + sigilsInteger[1] + "-" + sigilsInteger[2] + "-" + sigilsInteger[3]);
+    
+    loadProps();
 }
 
 void loadProps() {
-  color1 = int((float(sigilsInteger[0]) / 255) * 359);
-  println(color1);
+    color1 = int((float(sigilsInteger[0]) / 255) * 359);
+    println(color1);
 }
 
 void draw() {
-  noStroke();
-  lights();
-  // x, y, z location
-  translate(height / 2, height / 2, 0);
-  
-  // make from 0-360
-  fill(color1, 1, 1);
-  // create shape between 4 and 30
-  //sphereDetail((sigilsInteger[1] % (30 - 4)) + 4);
-  sphereDetail(7);
-  sphere(height / 4);
+    noStroke();
+    lights();
+    
+    //Text 
+    fill(255);
+    textSize(32);
+    text("~", 280, 50);
+    text(text1, 300, 50);
+    text("-", 320, 50);
+    text(text1, 300, 50);
+    
+    //x, y, z location
+    translate(height / 2, height / 2, 0);
+    
+    //make from 0-360
+    fill(color1, 1, 1);
+    //create shape between 4 and 30
+    //sphereDetail((sigilsInteger[1] % (30 - 4)) + 4);
+    sphereDetail(7);
+    sphere(height / 4);
+    
+    
+    
+    if (play) {
+        text("PLAY", 300, 250);
+        sine.play();
+        sine2.play();
+    } else{
+        sine.stop();
+        sine2.stop();
+    }
 }
+
+void keyPressed() {
+    if (key ==  BACKSPACE) {
+        if (text1.length()>0) {
+            text1 = text1.substring(0, text1.length() - 1);
+        } 
+    } 
+    else if (key ==  RETURN || key ==  ENTER) {
+        play = !play;
+    }
+    else {
+        text1 += key;
+    } 
+} 
