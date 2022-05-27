@@ -110,7 +110,7 @@ void draw() {
   //Text
   fill(255);
   textSize(32);
-  text("-", 320, 50);
+  text("~", 280, 50);
   text(text1, 300, 50);
 
   //x, y, z location
