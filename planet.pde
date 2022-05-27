@@ -4,7 +4,7 @@ import processing.sound.*;
 SinOsc sine;
 SinOsc sine2;
 
-String text1 = "";
+String text1 = "mastermaster";
 int FREQ = 300;
 boolean play = false;
 
@@ -64,7 +64,7 @@ void draw() {
     text(text1, 300, 50);
     
     //x, y, z location
-    translate(height / 2, height / 2, 0);
+    translate(400, 300, 0);
     
     if (play) {
         fill(color1, 1, 1);
@@ -77,7 +77,7 @@ void draw() {
         rotateZ(angleZ);
         
         sphereDetail(7);
-        sphere(height / 4);
+        sphere(800 / 4);
         
         loadProps();
         sine.play();
