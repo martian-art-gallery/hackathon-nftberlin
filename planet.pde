@@ -15,7 +15,12 @@ ArrayList<String> prefixes = new ArrayList<String>(Arrays.asList("doz", "mar", "
 ArrayList<String> suffixes = new ArrayList<String>(Arrays.asList("zod", "nec", "bud", "wes", "sev", "per", "sut", "let", "ful", "pen", "syt", "dur", "wep", "ser", "wyl", "sun", "ryp", "syx", "dyr", "nup", "heb", "peg", "lup", "dep", "dys", "put", "lug", "hec", "ryt", "tyv", "syd", "nex", "lun", "mep", "lut", "sep", "pes", "del", "sul", "ped", "tem", "led", "tul", "met", "wen", "byn", "hex", "feb", "pyl", "dul", "het", "mev", "rut", "tyl", "wyd", "tep", "bes", "dex", "sef", "wyc", "bur", "der", "nep", "pur", "rys", "reb", "den", "nut", "sub", "pet", "rul", "syn", "reg", "tyd", "sup", "sem", "wyn", "rec", "meg", "net", "sec", "mul", "nym", "tev", "web", "sum", "mut", "nyx", "rex", "teb", "fus", "hep", "ben", "mus", "wyx", "sym", "sel", "ruc", "dec", "wex", "syr", "wet", "dyl", "myn", "mes", "det", "bet", "bel", "tux", "tug", "myr", "pel", "syp", "ter", "meb", "set", "dut", "deg", "tex", "sur", "fel", "tud", "nux", "rux", "ren", "wyt", "nub", "med", "lyt", "dus", "neb", "rum", "tyn", "seg", "lyx", "pun", "res", "red", "fun", "rev", "ref", "mec", "ted", "rus", "bex", "leb", "dux", "ryn", "num", "pyx", "ryg", "ryx", "fep", "tyr", "tus", "tyc", "leg", "nem", "fer", "mer", "ten", "lus", "nus", "syl", "tec", "mex", "pub", "rym", "tuc", "fyl", "lep", "deb", "ber", "mug", "hut", "tun", "byl", "sud", "pem", "dev", "lur", "def", "bus", "bep", "run", "mel", "pex", "dyt", "byt", "typ", "lev", "myl", "wed", "duc", "fur", "fex", "nul", "luc", "len", "ner", "lex", "rup", "ned", "lec", "ryd", "lyd", "fen", "wel", "nyd", "hus", "rel", "rud", "nes", "hes", "fet", "des", "ret", "dun", "ler", "nyr", "seb", "hul", "ryl", "lud", "rem", "lys", "fyn", "wer", "ryc", "sug", "nys", "nyl", "lyn", "dyn", "dem", "lux", "fed", "sed", "bec", "mun", "lyr", "tes", "mud", "nyt", "byr", "sen", "weg", "fyr", "mur", "tel", "rep", "teg", "pec", "nel", "nev", "fes"));
 
 int color1;
-float rotationX;
+int color2;
+float rotationZ;
+
+float lightX;
+float lightY;
+float lightZ;
 
 void setup() {
     size(800, 600, P3D);
@@ -28,21 +33,36 @@ void setup() {
     
     sine.freq(FREQ);
     sine2.freq(FREQ * 2);
+    
+    Random rand = new Random();
+    sigils[0] = prefixes.get(rand.nextInt(prefixes.size()));
+    sigils[1] = suffixes.get(rand.nextInt(suffixes.size()));
+    sigils[2] = prefixes.get(rand.nextInt(prefixes.size()));
+    sigils[3] = suffixes.get(rand.nextInt(suffixes.size()));
 }
 
 void loadProps() {
+    /**
     sigils[0] = text1.substring(0, 3);
     sigils[1] = text1.substring(3, 6);
     sigils[2] = text1.substring(6, 9);
     sigils[3] = text1.substring(9, 12);
-    
+    */
+
     sigilsInteger[0] = prefixes.indexOf(sigils[0]);
     sigilsInteger[1] = suffixes.indexOf(sigils[1]);
     sigilsInteger[2] = prefixes.indexOf(sigils[2]);
     sigilsInteger[3] = suffixes.indexOf(sigils[3]);
     
-    color1 = int((float(sigilsInteger[0]) / 255) * 359);
-    rotationX = (float(sigilsInteger[2]) / 255) * (float)Math.PI;
+    color1 = int((float(sigilsInteger[0]) / 256) * 360);
+    color2 = int((float(sigilsInteger[1]) / 256) * 360);
+    
+    lightX = cos((255 * 2 * PI) / sigilsInteger[1]);
+    lightY = sin((255 * 2 * PI) / sigilsInteger[1]);
+    lightZ = 0;
+    
+    
+    rotationZ = (float(sigilsInteger[2]) / 256) * (float)Math.PI;
 }
 
 float angleX;
@@ -67,14 +87,18 @@ void draw() {
     translate(400, 300, 0);
     
     if (play) {
-        fill(color1, 1, 1);
+        directionalLight(float(color1), float(1), 1, lightX, lightY, lightZ);
+        
+        fill(color1, 1, 0.5);
+        
+        //spotLight(color2, 1, 1, 400, 300, -800 / 2, 0, 0, -1, PI/2, 0);
         
         angleX = angleX + jitter;
         angleY = angleY + jitter;
         angleZ = angleZ + jitter;
-        rotateX(angleX);
+        //rotateX(2);
+        rotateZ(rotationZ);
         rotateY(angleY);
-        rotateZ(angleZ);
         
         sphereDetail(7);
         sphere(800 / 4);
