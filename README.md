@@ -18,8 +18,8 @@ For the graphical part, we use a combination of (subject to change)
 To do list / Next Steps :
 - Attach Urbit documents and sigils doc
 - Sounds adds accessibility
-
-
+- Add Star background
+- Make it match the stars/planets galaxy constellation
 
 How to use
 how to run it tbd
