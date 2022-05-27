@@ -21,7 +21,6 @@ int color1;
 void setup() {
     size(800, 600, P3D);
     background(0);
-    loadSillable();
     colorMode(HSB, 360, 1, 1);
     
     //Create the sine oscillator.
@@ -30,33 +29,20 @@ void setup() {
     
     sine.freq(FREQ);
     sine2.freq(FREQ * 2);
-  
-    loadProps();
 }
 
-void loadSillable() {
-    /*
-    sigils[0] = "div";
-    sigils[1] = "ter";
-    sigils[2] = "mas";
-    sigils[3] = "ter";
-    */
-    Random rand = new Random();
-    sigils[0] = prefixes.get(rand.nextInt(prefixes.size()));
-    sigils[1] = suffixes.get(rand.nextInt(suffixes.size()));
-    sigils[2] = prefixes.get(rand.nextInt(prefixes.size()));
-    sigils[3] = suffixes.get(rand.nextInt(suffixes.size()));
-    println("Planet: ~" + sigils[0] + sigils[1] + "-" + sigils[2] + sigils[3]);
+void loadProps() {
+    sigils[0] = text1.substring(0, 3);
+    sigils[1] = text1.substring(3, 6);
+    sigils[2] = text1.substring(6, 9);
+    sigils[3] = text1.substring(9, 12);
+    
     sigilsInteger[0] = prefixes.indexOf(sigils[0]);
     sigilsInteger[1] = suffixes.indexOf(sigils[1]);
     sigilsInteger[2] = prefixes.indexOf(sigils[2]);
     sigilsInteger[3] = suffixes.indexOf(sigils[3]);
-    println("Planet: " + sigilsInteger[0] + "-" + sigilsInteger[1] + "-" + sigilsInteger[2] + "-" + sigilsInteger[3]);
-}
-
-void loadProps() {
+    
     color1 = int((float(sigilsInteger[0]) / 255) * 359);
-    println(color1);
 }
 
 float angle;
@@ -71,26 +57,24 @@ void draw() {
     //Text 
     fill(255);
     textSize(32);
-    text("~", 280, 50);
+    text("~", 280, 53);
     text(text1, 300, 50);
-    text("-", 320, 50);
     text(text1, 300, 50);
     
     //x, y, z location
     translate(height / 2, height / 2, 0);
-    fill(color1, 1, 1);
-  
-    angle = angle + jitter;
-    float c = cos(angle);
-    rotateX(c);
-
-    sphereDetail(7);
-    sphere(height / 4);
-    
-    
     
     if (play) {
-        text("PLAY", 300, 250);
+        fill(color1, 1, 1);
+        
+        angle = angle + jitter;
+        float c = cos(angle);
+        rotateX(c);
+        
+        sphereDetail(7);
+        sphere(height / 4);
+        
+        loadProps();
         sine.play();
         sine2.play();
     } else{
