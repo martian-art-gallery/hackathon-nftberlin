@@ -8,7 +8,7 @@ String patp = "";
 boolean play = false;
 
 String sigils[] = new String[4];
-Byte sigilsInteger[] = new Byte[4];
+Integer sigilsInteger[] = new Integer[4];
 
 
 int[] cMajor = { 0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26};
@@ -47,22 +47,12 @@ void loadProps() {
   sigils[1] = patp.substring(6, 9);
   sigils[2] = patp.substring(10, 13);
   sigils[3] = patp.substring(13, 16);
-  print(patp);
-  print("\n");
-  print(sigils[0]);
-print("\n");
-  print(sigils[1]);
-print("\n");
-  print(sigils[2]);
-print("\n");
-  print(sigils[3]);
-  print("\n");
 
-  sigilsInteger[0] = (byte)prefixes.indexOf(sigils[0]);
-  sigilsInteger[1] = (byte)suffixes.indexOf(sigils[1]);
-  sigilsInteger[2] = (byte)prefixes.indexOf(sigils[2]);
-  sigilsInteger[3] = (byte)suffixes.indexOf(sigils[3]);
-
+  sigilsInteger[0] = prefixes.indexOf(sigils[0]);
+  sigilsInteger[1] = suffixes.indexOf(sigils[1]);
+  sigilsInteger[2] = prefixes.indexOf(sigils[2]);
+  sigilsInteger[3] = suffixes.indexOf(sigils[3]);
+  
   color1 = int((float(sigilsInteger[0]) / 255) * 359);
   lightX = cos((255 * 2 * PI) / sigilsInteger[1]);
   lightY = sin((255 * 2 * PI) / sigilsInteger[1]);
@@ -87,7 +77,7 @@ void playFreq(float FREQ, float FREQ2) {
   sine2.play();
 }
 
-void playByte(byte b, int[] scale) {
+void playByte(int b, int[] scale) {
   playFreq(noteToFreq(scale[leftNibble(b)]), noteToFreq(scale[rightNibble(b)]));
 }
 
@@ -96,7 +86,7 @@ void stopSound() {
   sine2.stop();
 }
 
-void playSequence(byte p1, byte s1, byte p2, byte s2) {
+void playSequence(int p1, int s1, int p2, int s2) {
 
   if ((millis() - timer) >= 0 && (millis() - timer) < 400) {
     playByte(p1, cMajor);
@@ -182,10 +172,10 @@ float noteToFreq(int note) {
 }
 
 
-int leftNibble(byte x) {
+int leftNibble(int x) {
   return (x & 0xF0) / 16;
 }
 
-int rightNibble(byte x) {
+int rightNibble(int x) {
   return x & 0xF;
 }
