@@ -30,6 +30,8 @@ void setup() {
     
     sine.freq(FREQ);
     sine2.freq(FREQ * 2);
+  
+    loadProps();
 }
 
 void loadSillable() {
@@ -50,8 +52,6 @@ void loadSillable() {
     sigilsInteger[2] = prefixes.indexOf(sigils[2]);
     sigilsInteger[3] = suffixes.indexOf(sigils[3]);
     println("Planet: " + sigilsInteger[0] + "-" + sigilsInteger[1] + "-" + sigilsInteger[2] + "-" + sigilsInteger[3]);
-    
-    loadProps();
 }
 
 void loadProps() {
@@ -59,9 +59,14 @@ void loadProps() {
     println(color1);
 }
 
+float angle;
+float jitter = 0.1;
+
 void draw() {
     noStroke();
     lights();
+    
+    background(0);
     
     //Text 
     fill(255);
@@ -73,11 +78,12 @@ void draw() {
     
     //x, y, z location
     translate(height / 2, height / 2, 0);
-    
-    //make from 0-360
     fill(color1, 1, 1);
-    //create shape between 4 and 30
-    //sphereDetail((sigilsInteger[1] % (30 - 4)) + 4);
+  
+    angle = angle + jitter;
+    float c = cos(angle);
+    rotateX(c);
+
     sphereDetail(7);
     sphere(height / 4);
     
