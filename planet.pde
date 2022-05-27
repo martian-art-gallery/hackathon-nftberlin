@@ -49,6 +49,9 @@ void loadProps() {
   sigilsInteger[3] = (byte)suffixes.indexOf(sigils[3]);
 
   color1 = int((float(sigilsInteger[0]) / 255) * 359);
+  lightX = cos((255 * 2 * PI) / sigilsInteger[1]);
+  lightY = sin((255 * 2 * PI) / sigilsInteger[1]);
+  lightZ = 0;
   rotationZ = (float(sigilsInteger[2]) / 256) * (float)Math.PI;
 }
 
