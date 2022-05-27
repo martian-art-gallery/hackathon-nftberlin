@@ -39,10 +39,10 @@ void setup() {
 }
 
 void loadProps() {
-  sigils[0] = patp.substring(3, 6);
-  sigils[1] = patp.substring(6, 9);
-  sigils[2] = patp.substring(10, 13);
-  sigils[3] = patp.substring(13, 16);
+  sigils[0] = patp.substring(2, 5);
+  sigils[1] = patp.substring(5, 8);
+  sigils[2] = patp.substring(9, 12);
+  sigils[3] = patp.substring(12, 15);
 
   sigilsInteger[0] = prefixes.indexOf(sigils[0]);
   sigilsInteger[1] = suffixes.indexOf(sigils[1]);
@@ -53,16 +53,14 @@ void loadProps() {
   lightX = cos((255 * 2 * PI) / sigilsInteger[1]);
   lightY = sin((255 * 2 * PI) / sigilsInteger[1]);
   lightZ = 0;
-  rotationZ = (float(sigilsInteger[2]) / 256) * (float)Math.PI;
-  //min 0.006
-  //max 0.016
+  rotationZ = map(sigilsInteger[2], 0, 255, 0.006, 3.141532);
+
   speed = map(sigilsInteger[3], 0, 255, 0.006, 0.016);
 }
 
 float angleX;
 float angleY;
 float angleZ;
-
 
 void playFreq(float FREQ, float FREQ2) {
   sine.stop();
@@ -143,11 +141,11 @@ void keyPressed() {
     if (patp.length()>0 && !play) {
       patp = patp.substring(0, patp.length() - 1);
     }
-  } else if ((key ==  RETURN || key ==  ENTER) && patp.length() == 16) {
+  } else if ((key ==  RETURN || key ==  ENTER) && patp.length() >= 14) {
     timer = millis();
     play= !play;
   } else {
-    if (patp.length()<16) {
+    if (patp.length()<15) {
       patp += key;
     }
   }
