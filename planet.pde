@@ -5,7 +5,6 @@ SinOsc sine;
 SinOsc sine2;
 
 String text1 = "";
-int FREQ = 300;
 boolean play = false;
 
 String sigils[] = new String[4];
@@ -17,7 +16,7 @@ ArrayList<String> suffixes = new ArrayList<String>(Arrays.asList("zod", "nec", "
 int height = 512;
 
 int color1;
-
+int timer;
 void setup() {
     size(800, 600, P3D);
     background(0);
@@ -26,9 +25,6 @@ void setup() {
     //Create the sine oscillator.
     sine = new SinOsc(this);
     sine2 = new SinOsc(this);
-    
-    sine.freq(FREQ);
-    sine2.freq(FREQ * 2);
 }
 
 void loadProps() {
@@ -45,6 +41,34 @@ void loadProps() {
     color1 = int((float(sigilsInteger[0]) / 255) * 359);
 }
 
+void playSound(int FREQ, int FREQ2) {
+    sine.stop();
+    sine2.stop();
+    sine.freq(FREQ);
+    sine2.freq(FREQ2);
+    sine.play();
+    sine2.play();
+}
+
+void stopSound() {
+    sine.stop();
+    sine2.stop();
+}
+
+void playSequence() {
+    if((millis() - timer) >= 0 && (millis() - timer) < 400) {
+        playSound(400, 800);
+} else if ((millis() - timer) > 400 && (millis() - timer) < 800) {
+        playSound(300, 600);
+} else if ((millis() - timer) > 900 && (millis() - timer) < 1300) {
+        playSound(400, 800);
+} else if ((millis() - timer) > 1300 && (millis() - timer) < 1700) {
+        playSound(300, 600);
+} else {
+        stopSound();
+}
+}
+
 float angle;
 float jitter = 0.1;
 
@@ -54,7 +78,7 @@ void draw() {
     
     background(0);
     
-    //Text 
+    //Text
     fill(255);
     textSize(32);
     text("~", 280, 53);
@@ -63,7 +87,7 @@ void draw() {
     //x, y, z location
     translate(height / 2, height / 2, 0);
     
-    if (play) {
+    if(play) {
         fill(color1, 1, 1);
         
         angle = angle + jitter;
@@ -74,26 +98,24 @@ void draw() {
         sphere(height / 4);
         
         loadProps();
-        sine.play();
-        sine2.play();
-    } else{
+        playSequence();
+} else {
         sine.stop();
         sine2.stop();
-    }
+}
 }
 
 void keyPressed() {
-    if (key ==  BACKSPACE) {
+    if(key ==  BACKSPACE) {
         if (text1.length()>0 && !play) {
             text1 = text1.substring(0, text1.length() - 1);
-        } 
-    } 
-    else if ((key ==  RETURN || key ==  ENTER) && text1.length() == 12) {
-        play = !play;
-    }
-    else {
+        }
+} else if ((key ==  RETURN || key ==  ENTER) && text1.length() == 12) {
+        timer = millis();
+        play= !play;
+} else {
         if (text1.length()<12) {
             text1 += key;
         }
-    } 
-} 
+}
+}
