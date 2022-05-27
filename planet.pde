@@ -59,7 +59,6 @@ void draw() {
     textSize(32);
     text("~", 280, 53);
     text(text1, 300, 50);
-    text(text1, 300, 50);
     
     //x, y, z location
     translate(height / 2, height / 2, 0);
@@ -85,14 +84,16 @@ void draw() {
 
 void keyPressed() {
     if (key ==  BACKSPACE) {
-        if (text1.length()>0) {
+        if (text1.length()>0 && !play) {
             text1 = text1.substring(0, text1.length() - 1);
         } 
     } 
-    else if (key ==  RETURN || key ==  ENTER) {
+    else if ((key ==  RETURN || key ==  ENTER) && text1.length() == 12) {
         play = !play;
     }
     else {
-        text1 += key;
+        if (text1.length()<12) {
+            text1 += key;
+        }
     } 
 } 
