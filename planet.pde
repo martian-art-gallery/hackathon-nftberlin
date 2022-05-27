@@ -28,10 +28,6 @@ float lightY;
 float lightZ;
 
 void setup() {
-
-  println(cMajor);
-
-
   size(800, 600, P3D);
   background(0);
   colorMode(HSB, 360, 1, 1);
@@ -80,7 +76,6 @@ void stopSound() {
 }
 
 void playSequence(byte p1, byte s1, byte p2, byte s2) {
-  int[] scale = cMajor;
 
   if ((millis() - timer) >= 0 && (millis() - timer) < 400) {
     playByte(p1, cMajor);
