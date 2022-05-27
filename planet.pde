@@ -4,8 +4,7 @@ import processing.sound.*;
 SinOsc sine;
 SinOsc sine2;
 
-String text1 = "mastermaster";
-int FREQ = 300;
+String text1 = "";
 boolean play = false;
 
 String sigils[] = new String[4];
@@ -17,89 +16,115 @@ ArrayList<String> suffixes = new ArrayList<String>(Arrays.asList("zod", "nec", "
 int color1;
 float rotationX;
 
+int timer;
 void setup() {
-    size(800, 600, P3D);
-    background(0);
-    colorMode(HSB, 360, 1, 1);
-    
-    //Create the sine oscillator.
-    sine = new SinOsc(this);
-    sine2 = new SinOsc(this);
-    
-    sine.freq(FREQ);
-    sine2.freq(FREQ * 2);
+  size(800, 600, P3D);
+  background(0);
+  colorMode(HSB, 360, 1, 1);
+
+  //Create the sine oscillator.
+  sine = new SinOsc(this);
+  sine2 = new SinOsc(this);
 }
 
 void loadProps() {
-    sigils[0] = text1.substring(0, 3);
-    sigils[1] = text1.substring(3, 6);
-    sigils[2] = text1.substring(6, 9);
-    sigils[3] = text1.substring(9, 12);
-    
-    sigilsInteger[0] = prefixes.indexOf(sigils[0]);
-    sigilsInteger[1] = suffixes.indexOf(sigils[1]);
-    sigilsInteger[2] = prefixes.indexOf(sigils[2]);
-    sigilsInteger[3] = suffixes.indexOf(sigils[3]);
-    
-    color1 = int((float(sigilsInteger[0]) / 255) * 359);
-    rotationX = (float(sigilsInteger[2]) / 255) * (float)Math.PI;
+  sigils[0] = text1.substring(0, 3);
+  sigils[1] = text1.substring(3, 6);
+  sigils[2] = text1.substring(6, 9);
+  sigils[3] = text1.substring(9, 12);
+
+  sigilsInteger[0] = prefixes.indexOf(sigils[0]);
+  sigilsInteger[1] = suffixes.indexOf(sigils[1]);
+  sigilsInteger[2] = prefixes.indexOf(sigils[2]);
+  sigilsInteger[3] = suffixes.indexOf(sigils[3]);
+
+  color1 = int((float(sigilsInteger[0]) / 255) * 359);
+  rotationX = (float(sigilsInteger[2]) / 255) * (float)Math.PI;
 }
 
 float angleX;
 float angleY;
 float angleZ;
 
-float jitter = 0.025;
+
+void playSound(int FREQ, int FREQ2) {
+  sine.stop();
+  sine2.stop();
+  sine.freq(FREQ);
+  sine2.freq(FREQ2);
+  sine.play();
+  sine2.play();
+}
+
+void stopSound() {
+  sine.stop();
+  sine2.stop();
+}
+
+void playSequence() {
+  if ((millis() - timer) >= 0 && (millis() - timer) < 400) {
+    playSound(400, 800);
+  } else if ((millis() - timer) > 400 && (millis() - timer) < 800) {
+    playSound(300, 600);
+  } else if ((millis() - timer) > 900 && (millis() - timer) < 1300) {
+    playSound(400, 800);
+  } else if ((millis() - timer) > 1300 && (millis() - timer) < 1700) {
+    playSound(300, 600);
+  } else {
+    stopSound();
+  }
+}
+
+float angle;
+float jitter = 0.1;
 
 void draw() {
-    noStroke();
-    lights();
-    
-    background(0);
-    
-    //Text 
-    fill(255);
-    textSize(32);
-    text("-", 320, 50);
-    text(text1, 300, 50);
-    
-    //x, y, z location
-    translate(400, 300, 0);
-    
-    if (play) {
-        fill(color1, 1, 1);
-        
-        angleX = angleX + jitter;
-        angleY = angleY + jitter;
-        angleZ = angleZ + jitter;
-        rotateX(angleX);
-        rotateY(angleY);
-        rotateZ(angleZ);
-        
-        sphereDetail(7);
-        sphere(800 / 4);
-        
-        loadProps();
-        sine.play();
-        sine2.play();
-    } else{
-        sine.stop();
-        sine2.stop();
-    }
+  noStroke();
+  lights();
+
+  background(0);
+
+  //Text
+  fill(255);
+  textSize(32);
+  text("-", 320, 50);
+  text(text1, 300, 50);
+
+  //x, y, z location
+  translate(400, 300, 0);
+
+  if (play) {
+    fill(color1, 1, 1);
+
+    angleX = angleX + jitter;
+    angleY = angleY + jitter;
+    angleZ = angleZ + jitter;
+    rotateX(angleX);
+    rotateY(angleY);
+    rotateZ(angleZ);
+
+    sphereDetail(7);
+    sphere(800 / 4);
+
+    loadProps();
+    playSequence();
+  } else {
+    sine.stop();
+    sine2.stop();
+  }
 }
 
 void keyPressed() {
-    if (key ==  BACKSPACE) {
-        if (text1.length()>0 && !play) {
-            text1 = text1.substring(0, text1.length() - 1);
-        } 
-    } 
-    else if ((key ==  RETURN || key ==  ENTER) && text1.length() == 12) {
-        play = !play;
+  if (key ==  BACKSPACE) {
+    if (text1.length()>0 && !play) {
+      text1 = text1.substring(0, text1.length() - 1);
     }
-    else {
-        if (text1.length()<12) {
-            text1 += key;
-        }
-    } 
-} 
+  } else if ((key ==  RETURN || key ==  ENTER) && text1.length() == 12) {
+    timer = millis();
+    play= !play;
+  } else {
+    if (text1.length()<12) {
+      text1 += key;
+    }
+  }
+}
