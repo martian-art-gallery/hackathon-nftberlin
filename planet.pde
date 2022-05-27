@@ -4,7 +4,7 @@ import processing.sound.*;
 SinOsc sine;
 SinOsc sine2;
 
-String text1 = "";
+String patp = "";
 boolean play = false;
 
 String sigils[] = new String[4];
@@ -23,8 +23,6 @@ float rotationX;
 int timer;
 void setup() {
   
-  println(cMajor);
-
 
   size(800, 600, P3D);
   background(0);
@@ -36,10 +34,20 @@ void setup() {
 }
 
 void loadProps() {
-  sigils[0] = text1.substring(0, 3);
-  sigils[1] = text1.substring(3, 6);
-  sigils[2] = text1.substring(6, 9);
-  sigils[3] = text1.substring(9, 12);
+  sigils[0] = patp.substring(3, 6);
+  sigils[1] = patp.substring(6, 9);
+  sigils[2] = patp.substring(10, 13);
+  sigils[3] = patp.substring(13, 16);
+  print(patp);
+  print("\n");
+  print(sigils[0]);
+print("\n");
+  print(sigils[1]);
+print("\n");
+  print(sigils[2]);
+print("\n");
+  print(sigils[3]);
+  print("\n");
 
   sigilsInteger[0] = (byte)prefixes.indexOf(sigils[0]);
   sigilsInteger[1] = (byte)suffixes.indexOf(sigils[1]);
@@ -104,8 +112,8 @@ void draw() {
   //Text
   fill(255);
   textSize(32);
-  text("-", 320, 50);
-  text(text1, 300, 50);
+  // text("-", 320, 50);
+  text(patp, 300, 50);
 
   //x, y, z location
   translate(400, 300, 0);
@@ -133,15 +141,15 @@ void draw() {
 
 void keyPressed() {
   if (key ==  BACKSPACE) {
-    if (text1.length()>0 && !play) {
-      text1 = text1.substring(0, text1.length() - 1);
+    if (patp.length()>0 && !play) {
+      patp = patp.substring(0, patp.length() - 1);
     }
-  } else if ((key ==  RETURN || key ==  ENTER) && text1.length() == 12) {
+  } else if ((key ==  RETURN || key ==  ENTER) && patp.length() == 16) {
     timer = millis();
     play= !play;
   } else {
-    if (text1.length()<12) {
-      text1 += key;
+    if (patp.length()<16) {
+      patp += key;
     }
   }
 }
