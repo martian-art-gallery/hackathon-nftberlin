@@ -6,7 +6,6 @@ SinOsc sine2;
 
 String patp = "";
 boolean play = false;
-
 String sigils[] = new String[4];
 Integer sigilsInteger[] = new Integer[4];
 
@@ -23,14 +22,11 @@ float rotationZ;
 
 int timer;
 
-
-
 float lightX;
 float lightY;
 float lightZ;
 
 float speed;
-
 
 void setup() {
   size(800, 600, P3D);
@@ -52,7 +48,7 @@ void loadProps() {
   sigilsInteger[1] = suffixes.indexOf(sigils[1]);
   sigilsInteger[2] = prefixes.indexOf(sigils[2]);
   sigilsInteger[3] = suffixes.indexOf(sigils[3]);
-  
+
   color1 = int((float(sigilsInteger[0]) / 255) * 359);
   lightX = cos((255 * 2 * PI) / sigilsInteger[1]);
   lightY = sin((255 * 2 * PI) / sigilsInteger[1]);
@@ -111,30 +107,23 @@ void draw() {
 
   background(0);
 
-
   //Text
   fill(255);
   textSize(32);
 
-  // text("-", 320, 50);
   text(patp, 300, 50);
 
 
   //x, y, z location
   translate(400, 300, 0);
 
-
   if (play) {
     directionalLight(float(color1), float(1), 1, lightX, lightY, lightZ);
 
     fill(color1, 1, 0.5);
 
-    //spotLight(color2, 1, 1, 400, 300, -800 / 2, 0, 0, -1, PI/2, 0);
-
-    angleX = angleX + speed;
     angleY = angleY + speed;
-    angleZ = angleZ + speed;
-    //rotateX(2);
+
     rotateZ(rotationZ);
     rotateY(angleY);
 
@@ -166,7 +155,6 @@ void keyPressed() {
 
 
 // This helper function calculates the respective frequency of a MIDI note
-// C
 float noteToFreq(int note) {
   return (pow(2, ((note - 9)/12.0))) * 440 / 2;
 }
