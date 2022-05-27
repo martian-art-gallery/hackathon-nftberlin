@@ -3,7 +3,7 @@ The purpose of this project is to produce a unique audio-visual / representation
 It takes the two words eg "master" "masrze" (or 4 sigils 'mas','ter','mas','rze') as input,
 and creates a combined output :
 - a graphical colored representation of the planet
-- a set of 4 soundwaves
+- a sequence of sounds
 
 Both sound and image are one-to-one unique, making it less error-prone.
 Only one of the two digital media is enough to verify the signature, even though theoritical.
@@ -21,10 +21,18 @@ To do list / Next Steps :
 - Add Star background
 - Make it match the stars/planets galaxy constellation
 
-How to use
-how to run it tbd
-*screenshots*
+How to use:
 Type sigils , press enter.
+
+How to run it TBD
+
+*screenshots*
+
+master-master
+![Image](https://media.discordapp.net/attachments/979652228019277829/979850260274880552/Screenshot_2022-05-27_at_22.41.49.png?width=774&height=606)
+
+satsur-pocmel
+![Image](https://media.discordapp.net/attachments/979652228019277829/979850420602175538/Screenshot_2022-05-27_at_22.55.37.png?width=770&height=606)
 
 What is Urbit ID?
 Urbit ID is a decentralized address space infrastructure designed for Urbit OS. Urbit ID is the Identity system of Urbit, consisting of 2^32 (4.294.967.296) unique identities. Urbit IDs are distributed hierarchically. At the top of this hierarchy there are 2^8 (256) galaxies. Each galaxy issues 2^8 stars, making a total of 2^16 (65K). Stars then each can issue 2^16 planets, making for a total of 2^32 (~4B). Each of the identities has its own point on the network, its Azimuth point and a corresponding unique pronounceable name with a tilde before it, like: ~wolref-podlex. Galaxies can be found at the first 256 points, Galaxy ~zod is for example azimuth point 0, the Stars that are spawned under a galaxy are placed from point 256 onwards Planets are the 4 billion points from 65.536. If we look at the table below we can identify that ~wolref-podlex is a planet and its Azimuth point is 4.880.309. You can find out more about Urbit IDs here https://urbit.org/understanding-urbit/urbit-id and you can look up all the information about specific Urbit IDs and their parent here https://urbit.live/.
