@@ -39,15 +39,30 @@ void setup() {
 }
 
 void loadProps() {
+  // windows
+  //sigils[0] = patp.substring(3, 6);
+  //sigils[1] = patp.substring(6, 9);
+  //sigils[2] = patp.substring(10, 13);
+  //sigils[3] = patp.substring(13, 16);
+  
+  // mac
   sigils[0] = patp.substring(2, 5);
   sigils[1] = patp.substring(5, 8);
   sigils[2] = patp.substring(9, 12);
   sigils[3] = patp.substring(12, 15);
 
+
+  
+  println(sigils);
+  print("\n");
+
   sigilsInteger[0] = prefixes.indexOf(sigils[0]);
   sigilsInteger[1] = suffixes.indexOf(sigils[1]);
   sigilsInteger[2] = prefixes.indexOf(sigils[2]);
   sigilsInteger[3] = suffixes.indexOf(sigils[3]);
+   println(sigilsInteger);
+  print("\n");
+
 
   color1 = int((float(sigilsInteger[0]) / 255) * 359);
   lightX = cos((255 * 2 * PI) / sigilsInteger[1]);
@@ -141,11 +156,11 @@ void keyPressed() {
     if (patp.length()>0 && !play) {
       patp = patp.substring(0, patp.length() - 1);
     }
-  } else if ((key ==  RETURN || key ==  ENTER) && patp.length() >= 14) {
+  } else if ((key ==  RETURN || key ==  ENTER) && patp.length() >= 15) {
     timer = millis();
     play= !play;
   } else {
-    if (patp.length()<15) {
+    if (patp.length()<16) {
       patp += key;
     }
   }
