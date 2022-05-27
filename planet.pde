@@ -27,6 +27,8 @@ float lightX;
 float lightY;
 float lightZ;
 
+float speed;
+
 void setup() {
   size(800, 600, P3D);
   background(0);
@@ -53,6 +55,9 @@ void loadProps() {
   lightY = sin((255 * 2 * PI) / sigilsInteger[1]);
   lightZ = 0;
   rotationZ = (float(sigilsInteger[2]) / 256) * (float)Math.PI;
+  //min 0.006
+  //max 0.016
+  speed = map(sigilsInteger[3], 0, 255, 0.006, 0.016);
 }
 
 float angleX;
@@ -96,7 +101,6 @@ void playSequence(byte p1, byte s1, byte p2, byte s2) {
 
 
 float angle;
-float jitter = 0.1;
 
 void draw() {
   noStroke();
@@ -122,9 +126,9 @@ void draw() {
 
     //spotLight(color2, 1, 1, 400, 300, -800 / 2, 0, 0, -1, PI/2, 0);
 
-    angleX = angleX + jitter;
-    angleY = angleY + jitter;
-    angleZ = angleZ + jitter;
+    angleX = angleX + speed;
+    angleY = angleY + speed;
+    angleZ = angleZ + speed;
     //rotateX(2);
     rotateZ(rotationZ);
     rotateY(angleY);
