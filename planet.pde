@@ -45,16 +45,6 @@ void loadProps() {
   sigils[1] = patp.substring(6, 9);
   sigils[2] = patp.substring(10, 13);
   sigils[3] = patp.substring(13, 16);
-  print(patp);
-  print("\n");
-  print(sigils[0]);
-  print("\n");
-  print(sigils[1]);
-  print("\n");
-  print(sigils[2]);
-  print("\n");
-  print(sigils[3]);
-  print("\n");
 
   sigilsInteger[0] = (byte)prefixes.indexOf(sigils[0]);
   sigilsInteger[1] = (byte)suffixes.indexOf(sigils[1]);
@@ -116,19 +106,12 @@ void draw() {
 
   background(0);
 
-
   //Text
   fill(255);
   textSize(32);
-
-  // text("-", 320, 50);
   text(patp, 300, 50);
 
-
-  //x, y, z location
   translate(400, 300, 0);
-
-
   if (play) {
     directionalLight(float(color1), float(1), 1, lightX, lightY, lightZ);
 
