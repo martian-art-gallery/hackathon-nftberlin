@@ -29,6 +29,9 @@ How to run it TBD
 
 *screenshots*
 
+before input
+https://media.discordapp.net/attachments/979652228019277829/980015040398778398/Screenshot_2022-05-28_at_09.47.09.png?width=771&height=606
+
 master-master
 ![Image](https://media.discordapp.net/attachments/979652228019277829/979850260274880552/Screenshot_2022-05-27_at_22.41.49.png?width=774&height=606)
 
