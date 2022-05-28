@@ -1,14 +1,16 @@
 import java.util.*;
 import processing.sound.*;
 
-SinOsc sine;
-SinOsc sine2;
+TriOsc  waveform1;
+TriOsc  waveform2;
+TriOsc  waveform3;
 
 String patp = "";
 boolean play = false;
 String sigils[] = new String[4];
 Integer sigilsInteger[] = new Integer[4];
 
+int[][] patp2chord = new int [336][3];
 
 int[] cMajor = { 0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26};
 
@@ -34,22 +36,41 @@ void setup() {
   colorMode(HSB, 360, 1, 1);
 
   //Create the sine oscillator.
-  sine = new SinOsc(this);
-  sine2 = new SinOsc(this);
+  waveform1 = new TriOsc (this);
+  waveform2 = new TriOsc(this);
+  waveform3 = new TriOsc (this);
+  
+  
+  // drawing three notes without replacement from a set of 8 notes (e.g. c major across an entire octave) gives 8*7*6=336 possible choices.
+  int cntr = 0;
+  for (int i1  = 0; i1 < 8; i1++){
+    for (int i2 = 0; i2 < 8; i2++){
+      for (int i3  = 0; i3 < 8; i3++){
+        if ( (i3 != i2) && (i2 != i1)  && (i1 != i3) ){
+
+          patp2chord[cntr][0] = i1;
+          patp2chord[cntr][1] = i2;
+          patp2chord[cntr][2] = i3;
+          cntr++;
+        }
+      }
+    }
+  }
+
 }
 
 void loadProps() {
   // windows
-  //sigils[0] = patp.substring(3, 6);
-  //sigils[1] = patp.substring(6, 9);
-  //sigils[2] = patp.substring(10, 13);
-  //sigils[3] = patp.substring(13, 16);
+  sigils[0] = patp.substring(3, 6);
+  sigils[1] = patp.substring(6, 9);
+  sigils[2] = patp.substring(10, 13);
+  sigils[3] = patp.substring(13, 16);
   
   // mac
-  sigils[0] = patp.substring(2, 5);
-  sigils[1] = patp.substring(5, 8);
-  sigils[2] = patp.substring(9, 12);
-  sigils[3] = patp.substring(12, 15);
+  //sigils[0] = patp.substring(2, 5);
+  //sigils[1] = patp.substring(5, 8);
+  //sigils[2] = patp.substring(9, 12);
+  //sigils[3] = patp.substring(12, 15);
 
 
   
@@ -60,7 +81,7 @@ void loadProps() {
   sigilsInteger[1] = suffixes.indexOf(sigils[1]);
   sigilsInteger[2] = prefixes.indexOf(sigils[2]);
   sigilsInteger[3] = suffixes.indexOf(sigils[3]);
-   println(sigilsInteger);
+  println(sigilsInteger);
   print("\n");
 
 
@@ -77,40 +98,71 @@ float angleX;
 float angleY;
 float angleZ;
 
-void playFreq(float FREQ, float FREQ2) {
-  sine.stop();
-  sine2.stop();
-  sine.freq(FREQ);
-  sine2.freq(FREQ2);
-  sine.play();
-  sine2.play();
+void playIntervallFreq(float freq1, float freq2) {
+  waveform1.stop();
+  waveform2.stop();
+  waveform1.freq(freq1);
+  waveform2.freq(freq2);
+  waveform1.play();
+  waveform2.play();
 }
 
-void playByte(int b, int[] scale) {
-  playFreq(noteToFreq(scale[leftNibble(b)]), noteToFreq(scale[rightNibble(b)]));
+void playChordFreq(float freq1, float freq2, float freq3) {
+  waveform1.stop();
+  waveform2.stop();
+  waveform3.stop();
+  waveform1.freq(freq1);
+  waveform2.freq(freq2);
+  waveform3.freq(freq3);
+  waveform1.play();
+  waveform2.play();
+  waveform3.play();
+}
+
+void playByteToInterval(int b, int[] scale) {
+  // similar to what they did here https://www.youtube.com/watch?v=fyBf4Y2mVzs
+  playIntervallFreq(noteToFreq(scale[leftNibble(b)]), noteToFreq(scale[rightNibble(b)]));
+}
+
+void playByteToChord(int b, int[] scale) {
+  playChordFreq(noteToFreq(scale[patp2chord[b][0]]), noteToFreq(scale[patp2chord[b][1]]), noteToFreq(scale[patp2chord[b][2]]));
 }
 
 void stopSound() {
-  sine.stop();
-  sine2.stop();
+  waveform1.stop();
+  waveform2.stop();
+  waveform3.stop();
 }
 
-void playSequence(int p1, int s1, int p2, int s2) {
+void playIntervalSequence(int p1, int s1, int p2, int s2) {
 
   if ((millis() - timer) >= 0 && (millis() - timer) < 400) {
-    playByte(p1, cMajor);
+    playByteToInterval(p1, cMajor);
   } else if ((millis() - timer) > 400 && (millis() - timer) < 800) {
-    playByte(s1, cMajor);
+    playByteToInterval(s1, cMajor);
   } else if ((millis() - timer) > 900 && (millis() - timer) < 1300) {
-    playByte(p2, cMajor);
+    playByteToInterval(p2, cMajor);
   } else if ((millis() - timer) > 1300 && (millis() - timer) < 1700) {
-    playByte(s2, cMajor);
+    playByteToInterval(s2, cMajor);
   } else {
     stopSound();
   }
 }
 
+void playChordSequence(int p1, int s1, int p2, int s2) {
 
+  if ((millis() - timer) >= 0 && (millis() - timer) < 600) {
+    playByteToChord(p1, cMajor);
+  } else if ((millis() - timer) > 600 && (millis() - timer) < 1200) {
+    playByteToChord(s1, cMajor);
+  } else if ((millis() - timer) > 1400 && (millis() - timer) < 2000) {
+    playByteToChord(p2, cMajor);
+  } else if ((millis() - timer) > 2000 && (millis() - timer) < 2600) {
+    playByteToChord(s2, cMajor);
+  } else {
+    stopSound();
+  }
+}
 
 float angle;
 
@@ -144,10 +196,11 @@ void draw() {
     sphere(800 / 4);
 
     loadProps();
-    playSequence(sigilsInteger[0], sigilsInteger[1], sigilsInteger[2], sigilsInteger[3]);
+    playChordSequence(sigilsInteger[0], sigilsInteger[1], sigilsInteger[2], sigilsInteger[3]);
   } else {
-    sine.stop();
-    sine2.stop();
+    waveform1.stop();
+    waveform2.stop();
+    waveform3.stop();
   }
 }
 
@@ -169,14 +222,16 @@ void keyPressed() {
 
 // This helper function calculates the respective frequency of a MIDI note
 float noteToFreq(int note) {
-  return (pow(2, ((note - 9)/12.0))) * 440 / 2;
+  return (pow(2, ((note - 9)/12.0))) * 440;
 }
 
 
 int leftNibble(int x) {
+  // "left half" of a byte
   return (x & 0xF0) / 16;
 }
 
 int rightNibble(int x) {
+    // "right half" of a byte
   return x & 0xF;
 }
