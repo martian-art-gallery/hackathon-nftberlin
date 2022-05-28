@@ -1,4 +1,7 @@
 # hackathon-nftberlin
+
+## Description
+
 The purpose of this project is to produce a unique audio-visual / representation of the signature / signature of an Urbit adress.
 It takes the two words eg "master" "masrze" (or 4 sigils 'mas','ter','mas','rze') as input,
 and creates a combined output :
@@ -16,16 +19,22 @@ For the graphical part, we use a combination of (subject to change)
 - Color, rotational speed, rotational angle, lightning angle.
 For the sound, we use a use a chord in C Major scale
 
+## How to run:
+
+### Option 1: 
+ - Run an executable from one of the folders included on the /build folder.
+
+### Option 2:
+ - Download and install processing from: https://processing.org/download
+ - From the Processing IDE open the planet.pde file.
+ - Press run
+
+Once the software is running, just type the name of your planet (Eg. ~master-master) and press Enter.
+
+
 To do list / Next Steps :
-- Attach Urbit documents and sigils doc
-- Sounds adds accessibility
-- Add Star background
 - Make it match the stars/planets galaxy constellation
 
-How to use:
-Type sigils , press enter.
-
-How to run it TBD
 
 *screenshots*
 
