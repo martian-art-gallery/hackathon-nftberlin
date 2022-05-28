@@ -5,31 +5,37 @@ TriOsc  waveform1;
 TriOsc  waveform2;
 TriOsc  waveform3;
 
-String patp = "";
-boolean play = false;
-String sigils[] = new String[4];
-Integer sigilsInteger[] = new Integer[4];
-
-int[][] patp2chord = new int [336][3];
-
-int[] cMajor = { 0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26};
-
-star[] stars = new star[500];
-
-
+//Sigils
 ArrayList<String> prefixes = new ArrayList<String>(Arrays.asList("doz", "mar", "bin", "wan", "sam", "lit", "sig", "hid", "fid", "lis", "sog", "dir", "wac", "sab", "wis", "sib", "rig", "sol", "dop", "mod", "fog", "lid", "hop", "dar", "dor", "lor", "hod", "fol", "rin", "tog", "sil", "mir", "hol", "pas", "lac", "rov", "liv", "dal", "sat", "lib", "tab", "han", "tic", "pid", "tor", "bol", "fos", "dot", "los", "dil", "for", "pil", "ram", "tir", "win", "tad", "bic", "dif", "roc", "wid", "bis", "das", "mid", "lop", "ril", "nar", "dap", "mol", "san", "loc", "nov", "sit", "nid", "tip", "sic", "rop", "wit", "nat", "pan", "min", "rit", "pod", "mot", "tam", "tol", "sav", "pos", "nap", "nop", "som", "fin", "fon", "ban", "mor", "wor", "sip", "ron", "nor", "bot", "wic", "soc", "wat", "dol", "mag", "pic", "dav", "bid", "bal", "tim", "tas", "mal", "lig", "siv", "tag", "pad", "sal", "div", "dac", "tan", "sid", "fab", "tar", "mon", "ran", "nis", "wol", "mis", "pal", "las", "dis", "map", "rab", "tob", "rol", "lat", "lon", "nod", "nav", "fig", "nom", "nib", "pag", "sop", "ral", "bil", "had", "doc", "rid", "moc", "pac", "rav", "rip", "fal", "tod", "til", "tin", "hap", "mic", "fan", "pat", "tac", "lab", "mog", "sim", "son", "pin", "lom", "ric", "tap", "fir", "has", "bos", "bat", "poc", "hac", "tid", "hav", "sap", "lin", "dib", "hos", "dab", "bit", "bar", "rac", "par", "lod", "dos", "bor", "toc", "hil", "mac", "tom", "dig", "fil", "fas", "mit", "hob", "har", "mig", "hin", "rad", "mas", "hal", "rag", "lag", "fad", "top", "mop", "hab", "nil", "nos", "mil", "fop", "fam", "dat", "nol", "din", "hat", "nac", "ris", "fot", "rib", "hoc", "nim", "lar", "fit", "wal", "rap", "sar", "nal", "mos", "lan", "don", "dan", "lad", "dov", "riv", "bac", "pol", "lap", "tal", "pit", "nam", "bon", "ros", "ton", "fod", "pon", "sov", "noc", "sor", "lav", "mat", "mip", "fip"));
 ArrayList<String> suffixes = new ArrayList<String>(Arrays.asList("zod", "nec", "bud", "wes", "sev", "per", "sut", "let", "ful", "pen", "syt", "dur", "wep", "ser", "wyl", "sun", "ryp", "syx", "dyr", "nup", "heb", "peg", "lup", "dep", "dys", "put", "lug", "hec", "ryt", "tyv", "syd", "nex", "lun", "mep", "lut", "sep", "pes", "del", "sul", "ped", "tem", "led", "tul", "met", "wen", "byn", "hex", "feb", "pyl", "dul", "het", "mev", "rut", "tyl", "wyd", "tep", "bes", "dex", "sef", "wyc", "bur", "der", "nep", "pur", "rys", "reb", "den", "nut", "sub", "pet", "rul", "syn", "reg", "tyd", "sup", "sem", "wyn", "rec", "meg", "net", "sec", "mul", "nym", "tev", "web", "sum", "mut", "nyx", "rex", "teb", "fus", "hep", "ben", "mus", "wyx", "sym", "sel", "ruc", "dec", "wex", "syr", "wet", "dyl", "myn", "mes", "det", "bet", "bel", "tux", "tug", "myr", "pel", "syp", "ter", "meb", "set", "dut", "deg", "tex", "sur", "fel", "tud", "nux", "rux", "ren", "wyt", "nub", "med", "lyt", "dus", "neb", "rum", "tyn", "seg", "lyx", "pun", "res", "red", "fun", "rev", "ref", "mec", "ted", "rus", "bex", "leb", "dux", "ryn", "num", "pyx", "ryg", "ryx", "fep", "tyr", "tus", "tyc", "leg", "nem", "fer", "mer", "ten", "lus", "nus", "syl", "tec", "mex", "pub", "rym", "tuc", "fyl", "lep", "deb", "ber", "mug", "hut", "tun", "byl", "sud", "pem", "dev", "lur", "def", "bus", "bep", "run", "mel", "pex", "dyt", "byt", "typ", "lev", "myl", "wed", "duc", "fur", "fex", "nul", "luc", "len", "ner", "lex", "rup", "ned", "lec", "ryd", "lyd", "fen", "wel", "nyd", "hus", "rel", "rud", "nes", "hes", "fet", "des", "ret", "dun", "ler", "nyr", "seb", "hul", "ryl", "lud", "rem", "lys", "fyn", "wer", "ryc", "sug", "nys", "nyl", "lyn", "dyn", "dem", "lux", "fed", "sed", "bec", "mun", "lyr", "tes", "mud", "nyt", "byr", "sen", "weg", "fyr", "mur", "tel", "rep", "teg", "pec", "nel", "nev", "fes"));
 
+String patp = "";
+String sigils[] = new String[4];
+Integer sigilsInteger[] = new Integer[4];
+
+//Status
+boolean play = false;
+int timer;
+
+//Sound
+int[][] patp2chord = new int [336][3];
+int[] cMajor = { 0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26};
+
+// Visual elements
+star[] stars = new star[500];
+
 int color1;
 int color2;
-float rotationZ;
 
-int timer;
+float angleX;
+float angleY;
+float angleZ;
 
 float lightX;
 float lightY;
 float lightZ;
 
+float rotationZ;
 float speed;
 
 void setup() {
@@ -41,20 +47,17 @@ void setup() {
   waveform1 = new TriOsc (this);
   waveform2 = new TriOsc(this);
   waveform3 = new TriOsc (this);
-  
-  for(int i=0; i < stars.length; i++) {
+
+  for (int i=0; i < stars.length; i++) {
     stars[i] = new star();
   }
 
-  
-  
   // drawing three notes without replacement from a set of 8 notes (e.g. c major across an entire octave) gives 8*7*6=336 possible choices.
   int cntr = 0;
-  for (int i1  = 0; i1 < 8; i1++){
-    for (int i2 = 0; i2 < 8; i2++){
-      for (int i3  = 0; i3 < 8; i3++){
-        if ( (i3 != i2) && (i2 != i1)  && (i1 != i3) ){
-
+  for (int i1  = 0; i1 < 8; i1++) {
+    for (int i2 = 0; i2 < 8; i2++) {
+      for (int i3  = 0; i3 < 8; i3++) {
+        if ( (i3 != i2) && (i2 != i1)  && (i1 != i3) ) {
           patp2chord[cntr][0] = i1;
           patp2chord[cntr][1] = i2;
           patp2chord[cntr][2] = i3;
@@ -63,34 +66,25 @@ void setup() {
       }
     }
   }
-
 }
 
 void loadProps() {
   // windows
-  sigils[0] = patp.substring(3, 6);
-  sigils[1] = patp.substring(6, 9);
-  sigils[2] = patp.substring(10, 13);
-  sigils[3] = patp.substring(13, 16);
-  
+  //sigils[0] = patp.substring(3, 6);
+  //sigils[1] = patp.substring(6, 9);
+  //sigils[2] = patp.substring(10, 13);
+  //sigils[3] = patp.substring(13, 16);
+
   // mac
-  //sigils[0] = patp.substring(2, 5);
-  //sigils[1] = patp.substring(5, 8);
-  //sigils[2] = patp.substring(9, 12);
-  //sigils[3] = patp.substring(12, 15);
-
-
-  
-  println(sigils);
-  print("\n");
+  sigils[0] = patp.substring(2, 5);
+  sigils[1] = patp.substring(5, 8);
+  sigils[2] = patp.substring(9, 12);
+  sigils[3] = patp.substring(12, 15);
 
   sigilsInteger[0] = prefixes.indexOf(sigils[0]);
   sigilsInteger[1] = suffixes.indexOf(sigils[1]);
   sigilsInteger[2] = prefixes.indexOf(sigils[2]);
   sigilsInteger[3] = suffixes.indexOf(sigils[3]);
-  println(sigilsInteger);
-  print("\n");
-
 
   color1 = int((float(sigilsInteger[0]) / 255) * 359);
   lightX = cos((255 * 2 * PI) / sigilsInteger[1]);
@@ -99,19 +93,6 @@ void loadProps() {
   rotationZ = map(sigilsInteger[2], 0, 255, 0.006, 3.141532);
 
   speed = map(sigilsInteger[3], 0, 255, 0.006, 0.016);
-}
-
-float angleX;
-float angleY;
-float angleZ;
-
-void playIntervallFreq(float freq1, float freq2) {
-  waveform1.stop();
-  waveform2.stop();
-  waveform1.freq(freq1);
-  waveform2.freq(freq2);
-  waveform1.play();
-  waveform2.play();
 }
 
 void playChordFreq(float freq1, float freq2, float freq3) {
@@ -126,11 +107,6 @@ void playChordFreq(float freq1, float freq2, float freq3) {
   waveform3.play();
 }
 
-void playByteToInterval(int b, int[] scale) {
-  // similar to what they did here https://www.youtube.com/watch?v=fyBf4Y2mVzs
-  playIntervallFreq(noteToFreq(scale[leftNibble(b)]), noteToFreq(scale[rightNibble(b)]));
-}
-
 void playByteToChord(int b, int[] scale) {
   playChordFreq(noteToFreq(scale[patp2chord[b][0]]), noteToFreq(scale[patp2chord[b][1]]), noteToFreq(scale[patp2chord[b][2]]));
 }
@@ -141,23 +117,7 @@ void stopSound() {
   waveform3.stop();
 }
 
-void playIntervalSequence(int p1, int s1, int p2, int s2) {
-
-  if ((millis() - timer) >= 0 && (millis() - timer) < 400) {
-    playByteToInterval(p1, cMajor);
-  } else if ((millis() - timer) > 400 && (millis() - timer) < 800) {
-    playByteToInterval(s1, cMajor);
-  } else if ((millis() - timer) > 900 && (millis() - timer) < 1300) {
-    playByteToInterval(p2, cMajor);
-  } else if ((millis() - timer) > 1300 && (millis() - timer) < 1700) {
-    playByteToInterval(s2, cMajor);
-  } else {
-    stopSound();
-  }
-}
-
 void playChordSequence(int p1, int s1, int p2, int s2) {
-
   if ((millis() - timer) >= 0 && (millis() - timer) < 600) {
     playByteToChord(p1, cMajor);
   } else if ((millis() - timer) > 600 && (millis() - timer) < 1200) {
@@ -166,6 +126,8 @@ void playChordSequence(int p1, int s1, int p2, int s2) {
     playByteToChord(p2, cMajor);
   } else if ((millis() - timer) > 2000 && (millis() - timer) < 2600) {
     playByteToChord(s2, cMajor);
+  } else if ((millis() - timer) > 4500 ) {
+    timer = millis();
   } else {
     stopSound();
   }
@@ -180,14 +142,13 @@ void draw() {
   background(0);
 
   fill(255);
-    for(int i=0; i < stars.length; i++) {
-       stars[i].show();
-    }
+  for (int i=0; i < stars.length; i++) {
+    stars[i].show();
+  }
 
   //Text
   fill(255);
   textSize(32);
-
   text(patp, 300, 50);
 
 
@@ -196,13 +157,10 @@ void draw() {
 
   if (play) {
     directionalLight(float(color1), float(1), 1, lightX, lightY, lightZ);
-    
-   
 
-     stroke(color1,1, 0.5);
+    stroke(color1, 1, 0.5);
 
     fill(color1, 1, 0.5);
-
 
     angleY = angleY + speed;
 
@@ -249,6 +207,6 @@ int leftNibble(int x) {
 }
 
 int rightNibble(int x) {
-    // "right half" of a byte
+  // "right half" of a byte
   return x & 0xF;
 }
